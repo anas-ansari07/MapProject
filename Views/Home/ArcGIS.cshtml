@@ -1,0 +1,51 @@
+﻿@* 
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="https://js.arcgis.com/3.44/esri/css/esri.css">
+    <script src="https://js.arcgis.com/3.44/"></script>
+</head>
+<style>
+  html, body, #map {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+  }
+</style>
+<body class="claro">
+    <div id="map"></div>
+</body>
+<script>
+    
+    var map;
+    require(["esri/map"], function (Map) {
+        map = new Map("map", {
+            basemap: "topo-vector",
+            center: [77.377,28.514],
+            zoom: 13
+        });
+    });
+
+</script> *@
+
+<a href="mailto:aansari@gmail.com" target="_blank">Send Email</a>
+
+
+<table>
+    <tr>
+        <td id="linkid"><a href="www.google.com" target="_blank">www.gmail.com</a> </td>
+    </tr>
+</table>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var tdElement = document.getElementById("linkid");
+        var link = tdElement.querySelector("a"); 
+        var websiteText = link.textContent;
+        var url = "https://" + websiteText;   
+        console.log(url);
+        link.href = url;
+    });
+</script>
+

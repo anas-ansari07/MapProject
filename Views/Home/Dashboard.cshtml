@@ -1,0 +1,1139 @@
+﻿@model List<CoordinatesModel>
+
+<!--For Icon & jQuery-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!--For Rendering Map and Basic Functionality-->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<link rel="stylesheet" type="text/css" href="~/css/leaflet.measure.css" />
+<script type="text/javascript" src="~/js/leaflet.measure.js"></script>
+
+<!--Leaflet Draw-->
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/ol@v8.1.0/dist/ol.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v8.1.0/ol.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.5.0/proj4.js"></script>
+
+<!--Leaflet Free Draw-->
+@*<script src="https://cdn.jsdelivr.net/npm/leaflet-freedraw@2.8.4/leaflet-freedraw.js"></script>*@
+
+
+<style>
+    #map{
+      /*  width: 645px;*/
+        height:100vh;
+    }
+    .left-sidebar {
+        background-color: #fff;
+        color: white;
+        font-weight: bold;
+        padding: 5px;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    a {
+        text-decoration: none;
+        color: #379937;
+    }
+
+   
+
+    .dropdown {
+        /* position: relative; */
+        font-size: 14px;
+        color: #333;
+        .dropdown-list
+
+    {
+        padding: 12px;
+        background: #fff;
+        /* position: absolute; */
+        top: 30px;
+        left: 2px;
+        right: 2px;
+        box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .15);
+        transform-origin: 50% 0;
+        transform: scale(1, 0);
+        transition: transform .15s ease-in-out .15s;
+        max-height: 66vh;
+        overflow-y: scroll;
+    }
+
+    .dropdown-option {
+        display: block;
+        padding: 8px 12px;
+        opacity: 0;
+        transition: opacity .15s ease-in-out;
+    }
+
+    .dropdown-label {
+        display: block;
+        height: 30px;
+        background-color: #224E67;
+        /* border: 1px solid #ccc; */
+        padding: 6px 12px;
+        line-height: 1;
+        cursor: pointer;
+        color: white;
+        &:before
+
+    {
+        content: '▼';
+        float: right;
+    }
+
+    }
+
+    &.on {
+        .dropdown-list
+
+    {
+        transform: scale(1, 1);
+        transition-delay: 0s;
+        .dropdown-option
+
+    {
+        opacity: 1;
+        transition-delay: .2s;
+    }
+
+    }
+
+    .dropdown-label:before {
+        content: '▲';
+    }
+
+    }
+
+    [type="checkbox"] {
+        position: relative;
+        top: 2px;
+        margin-right: 4px;
+    }
+
+    }
+
+    .dropdown-menu {
+        .dropdown-toggle
+
+    {
+        &::before, &::after
+
+    {
+        position: absolute;
+        top: 0.85em;
+    }
+
+    &::before {
+        left: 0.255em;
+    }
+
+    &::after {
+        right: 0.255em;
+    }
+
+    }
+    }
+
+    .form-control {
+        display: block;
+        width: 20%;
+        padding: 0.375rem 0.75rem;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 0.2;
+        color: var(--bs-body-color);
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background-color: var(--bs-body-bg);
+        background-clip: padding-box;
+        border: var(--bs-border-width) solid var(--bs-border-color);
+        border-radius: var(--bs-border-radius);
+        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        margin: 0px 38px 0px 12px;
+    }
+
+    ul, #myUL {
+        list-style-type: none;
+    }
+
+    #myUL {
+        margin: 0;
+        padding: 0;
+    }
+
+    .caret {
+        cursor: pointer;
+        -webkit-user-select: none; 
+        -moz-user-select: none;
+        -ms-user-select: none; 
+        user-select: none;
+    }
+
+
+    .caret::before {
+        /* content: "\25B6"; */
+        color: black;
+        display: inline-block;
+        margin-right: 6px;
+    }
+
+    .caret-down::before {
+        -ms-transform: rotate(90deg); /* IE 9 */
+        -webkit-transform: rotate(90deg);
+        transform: rotate(90deg);
+    }
+
+    .nested {
+        display: none;
+    }
+
+    .active {
+        display: block;
+    }
+
+    .color {
+        width: 100%;
+        display: block;
+        background-color: #224E67;
+        color: white;
+        padding: 5px;
+        font-weight: 500;
+    }
+
+    .auto-height-div {
+        display: inline-block;
+        height: auto;
+        border: 1px solid #000;
+        padding: 10px;
+    }
+
+    #circle, #trash, #polyline, #rectangle, #info, #rotate, #question{
+        border: none; 
+        background: none; 
+        padding: 0; 
+        margin: 0; 
+        width: 28px; 
+       
+    }
+
+    #geoSel {
+        position: absolute;
+        top: 108px;
+        left: 362px;
+  
+        background-color: aliceblue;
+        padding: 10px;
+        border: 1px solid black;
+        z-index: 99999;
+        width: 236px;
+    }
+    }
+
+</style>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-3 p-0" style="padding: 0px 10px 0px 0px!important;  overflow:hidden;    background-color: #efefef;">
+                <ul id="myUL">
+                    <li>
+                        <span class="caret color">Viewport Inhoud<i class="fa-solid fa-caret-down float-end"></i> </span>
+                        <ul class="nested">
+                            <li>
+                            <li>
+                                <span class="caret"><i class="fa-solid fa-folder" style="color:#224E67;"></i> &nbsp;Folder 1</span>
+                                <ul class="nested">
+                                    <li>
+                                        <div class="dropdown-list">
+                                            <label class="dropdown-option">
+                                                <input type="checkbox" name="dropdown-group" value="Selection 1" />
+                                                Selection One
+                                            </label>
+
+                                            <label class="dropdown-option">
+                                                <input type="checkbox" name="dropdown-group" value="Selection 2" />
+                                                Selection Two
+                                            </label>
+
+                                            <label class="dropdown-option">
+                                                <input type="checkbox" name="dropdown-group" value="Selection 3" />
+                                                Selection Three
+                                            </label>
+
+                                            <label class="dropdown-option">
+                                                <input type="checkbox" name="dropdown-group" value="Selection 4" />
+                                                Selection Four
+                                            </label>
+
+                                            <label class="dropdown-option">
+                                                <input type="checkbox" name="dropdown-group" value="Selection 5" />
+                                                Selection Five
+                                            </label>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <span class="caret"><i class="fa-solid fa-folder" style="color:#224E67;"></i> &nbsp;Sub-Folder</span>
+                                        <ul class="nested">
+                                            <li>
+                                                <div class="dropdown-list">
+
+
+
+                                                    <label class="dropdown-option">
+                                                        <input type="checkbox" name="dropdown-group" value="Selection 1" />
+                                                        Selection One
+                                                    </label>
+
+                                                    <label class="dropdown-option">
+                                                        <input type="checkbox" name="dropdown-group" value="Selection 2" />
+                                                        Selection Two
+                                                    </label>
+
+                                                    <label class="dropdown-option">
+                                                        <input type="checkbox" name="dropdown-group" value="Selection 3" />
+                                                        Selection Three
+                                                    </label>
+
+                                                    <label class="dropdown-option">
+                                                        <input type="checkbox" name="dropdown-group" value="Selection 4" />
+                                                        Selection Four
+                                                    </label>
+
+                                                    <label class="dropdown-option">
+                                                        <input type="checkbox" name="dropdown-group" value="Selection 5" />
+                                                        Selection Five
+                                                    </label>
+                                                </div>
+                                            </li>
+
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                    </li>
+                    <li>
+                        <span class="caret"><i class="fa-solid fa-folder" style="color:#224E67;"></i> &nbsp;Folder 2</span>
+                        <ul class="nested">
+                            <li>
+                                <div class="dropdown-list">
+
+
+
+                                    <label class="dropdown-option">
+                                        <input type="checkbox" name="dropdown-group" value="Selection 1" />
+                                        Selection One
+                                    </label>
+
+                                    <label class="dropdown-option">
+                                        <input type="checkbox" name="dropdown-group" value="Selection 2" />
+                                        Selection Two
+                                    </label>
+
+                                    <label class="dropdown-option">
+                                        <input type="checkbox" name="dropdown-group" value="Selection 3" />
+                                        Selection Three
+                                    </label>
+
+                                    <label class="dropdown-option">
+                                        <input type="checkbox" name="dropdown-group" value="Selection 4" />
+                                        Selection Four
+                                    </label>
+
+                                    <label class="dropdown-option">
+                                        <input type="checkbox" name="dropdown-group" value="Selection 5" />
+                                        Selection Five
+                                    </label>
+                                </div>
+                            </li>
+
+                            <li>
+                                <span class="caret"><i class="fa-solid fa-folder" style="color:#224E67;"></i> &nbsp;Folder 1</span>
+                                <ul class="nested">
+                                    <li>
+                                        <div class="dropdown-list">
+
+
+
+                                            <label class="dropdown-option">
+                                                <input type="checkbox" name="dropdown-group" value="Selection 1" />
+                                                Selection One
+                                            </label>
+
+                                            <label class="dropdown-option">
+                                                <input type="checkbox" name="dropdown-group" value="Selection 2" />
+                                                Selection Two
+                                            </label>
+
+                                            <label class="dropdown-option">
+                                                <input type="checkbox" name="dropdown-group" value="Selection 3" />
+                                                Selection Three
+                                            </label>
+
+                                            <label class="dropdown-option">
+                                                <input type="checkbox" name="dropdown-group" value="Selection 4" />
+                                                Selection Four
+                                            </label>
+
+                                            <label class="dropdown-option">
+                                                <input type="checkbox" name="dropdown-group" value="Selection 5" />
+                                                Selection Five
+                                            </label>
+                                        </div>
+                                    </li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                </li>
+                <li>
+                    <span class="caret color">KaartLagen<i class="fa-solid fa-caret-down float-end"></i> </span>
+                    <ul class="nested">
+                        <li>
+                        <li>
+                            <span class="caret"><i class="fa-solid fa-folder" style="color:#224E67;"></i> &nbsp;Folder 1</span>
+                            <ul class="nested">
+                                <li>
+                                    <div class="dropdown-list">
+
+
+
+                                        <label class="dropdown-option">
+                                            <input type="checkbox" name="dropdown-group" value="Selection 1" />
+                                            Selection One
+                                        </label>
+
+                                        <label class="dropdown-option">
+                                            <input type="checkbox" name="dropdown-group" value="Selection 2" />
+                                            Selection Two
+                                        </label>
+
+                                        <label class="dropdown-option">
+                                            <input type="checkbox" name="dropdown-group" value="Selection 3" />
+                                            Selection Three
+                                        </label>
+
+                                        <label class="dropdown-option">
+                                            <input type="checkbox" name="dropdown-group" value="Selection 4" />
+                                            Selection Four
+                                        </label>
+
+                                        <label class="dropdown-option">
+                                            <input type="checkbox" name="dropdown-group" value="Selection 5" />
+                                            Selection Five
+                                        </label>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <span class="caret"><i class="fa-solid fa-folder" style="color:#224E67;"></i> &nbsp;Sub-Folder</span>
+                                    <ul class="nested">
+                                        <li>
+                                            <div class="dropdown-list">
+
+
+
+                                                <label class="dropdown-option">
+                                                    <input type="checkbox" name="dropdown-group" value="Selection 1" />
+                                                    Selection One
+                                                </label>
+
+                                                <label class="dropdown-option">
+                                                    <input type="checkbox" name="dropdown-group" value="Selection 2" />
+                                                    Selection Two
+                                                </label>
+
+                                                <label class="dropdown-option">
+                                                    <input type="checkbox" name="dropdown-group" value="Selection 3" />
+                                                    Selection Three
+                                                </label>
+
+                                                <label class="dropdown-option">
+                                                    <input type="checkbox" name="dropdown-group" value="Selection 4" />
+                                                    Selection Four
+                                                </label>
+
+                                                <label class="dropdown-option">
+                                                    <input type="checkbox" name="dropdown-group" value="Selection 5" />
+                                                    Selection Five
+                                                </label>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                </li>
+
+                <li>
+                    <span class="caret"><i class="fa-solid fa-folder" style="color:#224E67;"></i> &nbsp;Folder 2</span>
+                    <ul class="nested">
+                        <li>
+                            <div class="dropdown-list">
+                                <label class="dropdown-option">
+                                    <input type="checkbox" name="dropdown-group" value="Selection 1" />
+                                    Selection One
+                                </label>
+
+                                <label class="dropdown-option">
+                                    <input type="checkbox" name="dropdown-group" value="Selection 2" />
+                                    Selection Two
+                                </label>
+
+                                <label class="dropdown-option">
+                                    <input type="checkbox" name="dropdown-group" value="Selection 3" />
+                                    Selection Three
+                                </label>
+
+                                <label class="dropdown-option">
+                                    <input type="checkbox" name="dropdown-group" value="Selection 4" />
+                                    Selection Four
+                                </label>
+
+                                <label class="dropdown-option">
+                                    <input type="checkbox" name="dropdown-group" value="Selection 5" />
+                                    Selection Five
+                                </label>
+                            </div>
+                        </li>
+
+                        <li>
+                            <span class="caret"><i class="fa-solid fa-folder" style="color:#224E67;"></i> &nbsp;Folder 1</span>
+                            <ul class="nested">
+                                <li>
+                                    <div class="dropdown-list">
+                                        <label class="dropdown-option">
+                                            <input type="checkbox" name="dropdown-group" value="Selection 1" />
+                                            Selection One
+                                        </label>
+
+                                        <label class="dropdown-option">
+                                            <input type="checkbox" name="dropdown-group" value="Selection 2" />
+                                            Selection Two
+                                        </label>
+
+                                        <label class="dropdown-option">
+                                            <input type="checkbox" name="dropdown-group" value="Selection 3" />
+                                            Selection Three
+                                        </label>
+
+                                        <label class="dropdown-option">
+                                            <input type="checkbox" name="dropdown-group" value="Selection 4" />
+                                            Selection Four
+                                        </label>
+
+                                        <label class="dropdown-option">
+                                            <input type="checkbox" name="dropdown-group" value="Selection 5" />
+                                            Selection Five
+                                        </label>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                </ul>
+                </li>
+                <li>
+                    <span class="caret color">Overzichtskaart<i class="fa-solid fa-caret-down float-end"></i> </span>
+                    <ul class="nested p-0 ">
+                        <li>
+                            <img src="~/img/map.jpg" style="width: 400px;" alt="">
+                        </li>
+                        
+
+                    </ul>
+                </li>
+                </ul>
+                </li>
+                </li>
+
+
+
+
+
+                </ul>
+                </li>
+                </ul>
+                </li>
+                </ul>
+                </li>
+                </ul>
+
+
+
+
+
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-6 p-0 ">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 p-0">
+                    <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#ebebeb;border:1px solid #224e67;    height: 39px; ">
+                        <input class="form-control mr-sm-2" id="searchInput" type="text" placeholder="Search" aria-label="Search">  
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav mr-auto">
+                                <li class="nav-item active">                                 
+                                    <button type="button" id="info"><i class="fa-solid fa-circle-info" style="margin-top: 13px; color:#224E67;"></i></button>                                  
+                                </li>
+                                @*<li class="nav-item">
+                                    <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                                        <ul class="navbar-nav">
+                                            <li class="nav-item dropdown" style="margin-top: 2px;
+                                      margin-left: 10px;">
+                                                <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fa-solid fa-location-dot" style="color:#224E67;"></i>
+                                                </a>
+                                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </li>*@
+                                <li>
+                                    <button type="button" id="rotate"><i class="fa-solid fa-arrows-rotate" style="color:#224E67;    margin-top: 12px;margin-left: 10px; "></i></button>
+                                </li>
+                                @*<li class="nav-item">
+                                    <i class="fa-solid fa-chart-pie" style="color:#224E67;    margin-top: 12px;
+                                margin-left: 18px; "></i>
+                                </li>*@
+@*                                <li>
+                                    <i class="fa-solid fa-network-wired" style="color:#224E67;    margin-top: 12px;
+                                margin-left: 18px; "></i>
+                                </li>*@
+                                <li>
+                                    <i class="fa-solid fa-share" style="color:#224E67;    margin-top: 12px;
+                                margin-left: 18px; "></i>
+                                </li>
+                                @*<li>
+                                    <i class="fa-solid fa-chart-simple" style="color:#224E67;    margin-top: 12px;
+                                margin-left: 18px; "></i>
+                                </li>*@
+                                <li>
+                                    <button type="button" id="circle"><i class=" fa-solid fa-circle" style="color:#224E67; margin-top:12px; margin-left:18px;"></i></button>
+                                </li>
+                                <li>
+                                    <button type="button" id="polyline"><i class="fa-solid fa-draw-polygon" style="color:#224E67; margin-top:12px; margin-left:18px;"></i></button>
+                                </li>
+                                <li>
+                                    <button type="button" id="rectangle"><i class="fa-solid fa-square" style="color:#224E67; margin-top:12px; margin-left:18px;"></i></button>
+                                </li>
+                                
+                                <li>
+                                    <button type="button" id="trash"><i class="fa-solid fa-trash" style="color:#224E67; margin-top:12px; margin-left:18px;"></i></button>
+                                </li>
+                                <li class="float-end">
+                                    <button type="button" id="question"><i class="fa-solid fa-question" style="color:#224E67;    margin-top: 12px;
+                                margin-left: 18px;position: relative;left: 244px; "></i></button>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                    </div>
+                  
+                <!-- Map Div -->
+                <div class="col-lg-9 p-0 auto-height-div" style="overflow:hidden;" id="map">
+                    </div>
+                    <div id="geoSel"> </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 p-0" style="padding: 0px 0px 0px 0px!important;     background-color: #efefef;">
+                        <ul id="myUL">
+                            <li>
+                                <span class="caret color">Viewport Inhoud<i class="fa-solid fa-caret-down float-end"></i> </span>
+                                <ul class="nested">
+                                    <li>
+                                    <li>
+                                        <span class="caret"><i class="fa-solid fa-folder" style="color:#224E67;"></i> &nbsp;Folder 1</span>
+                                        <ul class="nested">
+                                            <li>
+                                                <div class="dropdown-list">
+                                                    <label class="dropdown-option">
+                                                        <input type="checkbox" name="dropdown-group" value="Selection 1" />
+                                                        Selection One
+                                                    </label>
+
+                                                    <label class="dropdown-option">
+                                                        <input type="checkbox" name="dropdown-group" value="Selection 2" />
+                                                        Selection Two
+                                                    </label>
+
+                                                    <label class="dropdown-option">
+                                                        <input type="checkbox" name="dropdown-group" value="Selection 3" />
+                                                        Selection Three
+                                                    </label>
+
+                                                    <label class="dropdown-option">
+                                                        <input type="checkbox" name="dropdown-group" value="Selection 4" />
+                                                        Selection Four
+                                                    </label>
+
+                                                    <label class="dropdown-option">
+                                                        <input type="checkbox" name="dropdown-group" value="Selection 5" />
+                                                        Selection Five
+                                                    </label>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <span class="caret"><i class="fa-solid fa-folder" style="color:#224E67;"></i> &nbsp;Sub-Folder</span>
+                                                <ul class="nested">
+                                                    <li>
+                                                        <div class="dropdown-list">
+                                                            <label class="dropdown-option">
+                                                                <input type="checkbox" name="dropdown-group" value="Selection 1" />
+                                                                Selection One
+                                                            </label>
+
+                                                            <label class="dropdown-option">
+                                                                <input type="checkbox" name="dropdown-group" value="Selection 2" />
+                                                                Selection Two
+                                                            </label>
+
+                                                            <label class="dropdown-option">
+                                                                <input type="checkbox" name="dropdown-group" value="Selection 3" />
+                                                                Selection Three
+                                                            </label>
+
+                                                            <label class="dropdown-option">
+                                                                <input type="checkbox" name="dropdown-group" value="Selection 4" />
+                                                                Selection Four
+                                                            </label>
+
+                                                            <label class="dropdown-option">
+                                                                <input type="checkbox" name="dropdown-group" value="Selection 5" />
+                                                                Selection Five
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </li>
+                            <li>
+                                <span class="caret"><i class="fa-solid fa-folder" style="color:#224E67;"></i> &nbsp;Folder 2</span>
+                                <ul class="nested">
+                                    <li>
+                                        <div class="dropdown-list">
+                                            <label class="dropdown-option">
+                                                <input type="checkbox" name="dropdown-group" value="Selection 1" />
+                                                Selection One
+                                            </label>
+
+                                            <label class="dropdown-option">
+                                                <input type="checkbox" name="dropdown-group" value="Selection 2" />
+                                                Selection Two
+                                            </label>
+
+                                            <label class="dropdown-option">
+                                                <input type="checkbox" name="dropdown-group" value="Selection 3" />
+                                                Selection Three
+                                            </label>
+
+                                            <label class="dropdown-option">
+                                                <input type="checkbox" name="dropdown-group" value="Selection 4" />
+                                                Selection Four
+                                            </label>
+
+                                            <label class="dropdown-option">
+                                                <input type="checkbox" name="dropdown-group" value="Selection 5" />
+                                                Selection Five
+                                            </label>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <span class="caret"><i class="fa-solid fa-folder" style="color:#224E67;"></i> &nbsp;Folder 1</span>
+                                        <ul class="nested">
+                                            <li>
+                                                <div class="dropdown-list">
+                                                    <label class="dropdown-option">
+                                                        <input type="checkbox" name="dropdown-group" value="Selection 1" />
+                                                        Selection One
+                                                    </label>
+
+                                                    <label class="dropdown-option">
+                                                        <input type="checkbox" name="dropdown-group" value="Selection 2" />
+                                                        Selection Two
+                                                    </label>
+
+                                                    <label class="dropdown-option">
+                                                        <input type="checkbox" name="dropdown-group" value="Selection 3" />
+                                                        Selection Three
+                                                    </label>
+
+                                                    <label class="dropdown-option">
+                                                        <input type="checkbox" name="dropdown-group" value="Selection 4" />
+                                                        Selection Four
+                                                    </label>
+
+                                                    <label class="dropdown-option">
+                                                        <input type="checkbox" name="dropdown-group" value="Selection 5" />
+                                                        Selection Five
+                                                    </label>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/js/style.js"></script>
+
+
+    <script>
+        //Initailizing map and added layer
+
+                var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '© OpenStreetMap'
+                });
+
+                var osmSatellite = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '© OpenStreetMap contributors'
+                });
+
+                var baseMaps = {
+                    "OpenStreetMap": osm,
+                    "SatelliteMap": osmSatellite
+                };
+
+                var map = L.map('map', {
+                    center: [28.514419, 77.377571],
+                    zoom: 6,
+                    zoomControl: false,
+                    layers: [osm]
+                });
+
+                var layerControl = L.control.layers(baseMaps).addTo(map);
+
+        //Adding Measure on Map
+
+                L.Measure = {
+                    linearMeasurement: "Distance measurement",
+                    areaMeasurement: "Area measurement",
+                    start: "Start",
+                    meter: "m",
+                    meterDecimals: 0,
+                    kilometer: "km",
+                    kilometerDecimals: 2,
+                    squareMeter: "m²",
+                    squareKilometers: "km²",
+                };
+
+                var measure = L.control.measure().addTo(map);
+
+        //Adding Scale and Zoom Functionality
+
+                var zoomOptions = {
+                    zoomInText: '+',
+                    zoomOutText: '-',
+                };
+                var zoom = L.control.zoom(zoomOptions);
+                zoom.addTo(map);
+
+                var scale = L.control.scale();
+                scale.addTo(map);
+       
+        //For storing the shapes drawn on layer
+
+                var drawnFeatures = new L.FeatureGroup();
+                map.addLayer(drawnFeatures);
+
+                var drawnItems = new L.FeatureGroup().addTo(map);
+
+        // Custom Marker
+
+                var MyCustomMarker = L.Icon.extend({
+                    options: {
+                        shadowUrl: null,
+                        iconAnchor: new L.Point(12, 12),
+                        iconSize: new L.Point(24, 24),
+                        iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/6/6b/Information_icon4_orange.svg'
+                    }
+                });
+                  
+        //For drawing the Shapes
+
+                var drawnControl = new L.Control.Draw(
+                    {
+                        draw: {
+                            marker: {
+                                icon: new MyCustomMarker()
+                            },
+                            circle: {
+                                shapeOptions: {
+                                    color: 'blue'
+                                }
+                            },
+                            polygon: {
+                                showLength: true,
+                                showArea: true,
+                                shapeOptions: {
+                                    color: 'red'
+                                }
+                            },
+                            rectangle: {
+                                shapeOptions: {
+                                    color: 'yellow'
+                                }
+                            }
+                        },
+                        edit: {
+                            featureGroup: drawnFeatures,
+                            remove: true,
+                            selectedPathOptions: {
+                                maintainColor: true,
+                                opacity: 0.3
+                            }
+                        }
+                    });
+                map.addControl(drawnControl);
+
+        //Saving the state of drawn shapes on map
+
+                map.on('draw:created', function (e) {
+                    var type = e.layer.type,
+                        layer = e.layer;
+                    drawnFeatures.addLayer(layer);
+                })
+
+            //Showing Details when click on map
+
+                //var popup = L.popup();
+                //function onmapclick(e) {
+                //    popup
+                //        .setLatLng(e.latlng)
+                //        .setContent("Current Coordinates are: " + e.latlng.toString())
+                //        .openOn(map);
+                //}
+                //map.on('click', onmapclick)
+
+                //For Displaying Points
+                    @foreach (var point in Model)
+                    {
+                        <text>
+                            L.marker([@point.Latitude, @point.Longitude]).addTo(map);
+                        </text>
+                    }
+
+                //For searching the location
+                var searchInput = document.getElementById('searchInput');
+                function searchLocation() {
+                    var query = searchInput.value;
+                    var accessToken = 'pk.eyJ1IjoiYW5hczAxMSIsImEiOiJjbG14OTk1ZWUwN2t1MmlxeWo3aXdvNmVwIn0.Mo_BPkP3JnJygqLX50uMxg';
+                    var mapboxGeocodingUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?access_token=${accessToken}`;
+
+                    fetch(mapboxGeocodingUrl)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.features && data.features.length > 0) {
+                                var result = data.features[0]; 
+                                var longitude = result.center[0];
+                                var latitude = result.center[1];      
+                                var marker = L.marker([latitude, longitude]).addTo(map);
+                                map.setView([latitude, longitude], 13); 
+                            } else {
+                                alert('Location not found.');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                }
+
+                //On key press (ENTER) search function will trigger
+                searchInput.addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') {
+                        searchLocation();
+                    }
+                });
+
+                // Function to draw a circle on the map 
+                function drawoncircleclick() {
+                    map.on('click', function (e) {
+                        var radius = 5000;
+                        var circle = L.circle(e.latlng, {
+                            color: 'red',
+                            fillColor: '#f03',
+                            fillOpacity: 0.5,
+                            radius: radius
+                        });
+                        drawnItems.addLayer(circle);
+                    });
+                }
+           
+                // Function to draw the polyline
+                var drawing = false;
+                var polyline = null;
+
+                document.getElementById('polyline').addEventListener('click', function () {
+                    drawing = !drawing;
+
+                    if (drawing) {                      
+                        polyline = L.polyline([], { color: 'red' }).addTo(map);
+                    } else {
+                        polyline = null;
+                    }
+                    drawnItems.addLayer(polyline);
+                });
+
+                map.on('click', function (e) {
+                    if (drawing) {
+                        
+                        if (polyline) {
+                            polyline.addLatLng(e.latlng);
+                        }
+                    }
+                });
+
+                // Function to draw rectangle
+                var rectangle;
+                function drawrectangle() {
+                    map.on('click', function (e) {
+                        if (!rectangle) {
+                            var bounds = [e.latlng, e.latlng];
+                            rectangle = L.rectangle(bounds, { color: 'blue' }).addTo(map);
+                            drawnItems.addLayer(rectangle);
+                        } else {
+                            var currentBounds = rectangle.getBounds();
+                            var newBounds = [currentBounds.getSouthWest(), e.latlng];
+                            rectangle.setBounds(newBounds);
+                            rectangle.redraw();
+                            drawnItems.addLayer(rectangle);
+
+                        }
+                    });
+                }
+
+                //Function to show information on info icon clicked
+                var popup;
+                var isInfoActive = false;
+
+                function information() {
+                    if (isInfoActive) {
+                        map.off('click', showInformation);
+                        map.closePopup(popup);
+                    } else {
+                        map.on('click', showInformation);
+                    }
+                    isInfoActive = !isInfoActive;
+                }
+
+                function showInformation(e) {
+                    popup = L.popup()
+                        .setLatLng(e.latlng)
+                        .setContent("Latitude: " + e.latlng.lat + "<br>Longitude: " + e.latlng.lng)
+                        .openOn(map);
+                }
+
+                //Function to rotate the map
+                function rotatemap(){
+                    var currentBearing = map.getBearing();                  
+                    var newBearing = currentBearing + 45;                   
+                    map.setBearing(newBearing);
+                }
+
+                // Function to delete all drawn features
+                function deleteFeature() {
+                    drawnItems.clearLayers();
+                }
+
+                //Function to rotate the map to 180 degree
+                const rotated = document.getElementById('map');
+                let rotation = 0;
+                const angle = 180;
+                function rotateImage() {
+                    rotation = (rotation + angle) % 360;
+                    rotated.style.transform = `rotate(${rotation}deg)`;
+                }
+               
+                // For selecting element and making functionality
+                document.getElementById('trash').addEventListener('click', deleteFeature);
+                document.getElementById('circle').addEventListener('click', drawoncircleclick);
+                document.getElementById('rectangle').addEventListener('click', drawrectangle);
+                document.getElementById('info').addEventListener('click',information);
+                document.getElementById('rotate').addEventListener('click',rotateImage);
+                document.getElementById('question').addEventListener('click', function () {
+                    window.open("https://leafletjs.com", "_blank");
+                });
+
+                //Function to Take layer from geoserver and showing on map and selection of layer using checkboxes
+
+                $.ajax({
+                    type: "GET",
+                    url: "http://localhost:8084/geoserver/topp/ows?service=WMS&version=1.3.0&request=GetCapabilities",
+                    dataType: "xml",
+                    success: function (xml) {
+
+                        // For Extracting the layer and Showing it on the Map (LeafLet)
+                        var layerNames = $(xml).find('Layer > Name');
+                        for (var i = 0; i < layerNames.length; i++) {
+                            var layerName = layerNames[i].textContent;
+
+                            var wmsLayer = L.tileLayer.wms("http://localhost:8084/geoserver/topp/wms?", {
+                                layers: layerName,
+                                format: 'image/png',
+                                transparent: true
+
+                            });
+
+                            var checkbox = document.createElement('input');
+                            checkbox.type = "checkbox";
+                            checkbox.name = "layerCheckbox";
+                            checkbox.value = layerName;
+
+
+                            (function (wmsLayer, checkbox) {
+                                checkbox.addEventListener('change', function () {
+                                    if (this.checked) {
+                                        map.addLayer(wmsLayer);
+
+                                    } else {
+                                        map.removeLayer(wmsLayer);
+                                    }
+                                });
+                            })(wmsLayer, checkbox);
+
+                            var label = document.createElement('label');
+                            label.appendChild(checkbox);
+
+                            label.appendChild(document.createTextNode(' ' + layerName));
+                            geoSel.appendChild(label);
+
+                            var container = document.createElement('div');
+                            container.appendChild(label);
+
+                            geoSel.appendChild(container);
+                        }
+                    }
+                });
+
+
+            
+
+
+
+</script>
+          
+

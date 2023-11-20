@@ -1,0 +1,178 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css" />
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
+
+    <style>
+        #mapContainer {
+            margin-left: -80px;
+            width: 1250px;
+            height: 500px;
+            background: lightgray;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div id="mapContainer"></div>
+    </div>
+    
+    
+    <script>
+
+        // Initialize the platform object:
+        var platform = new H.service.Platform({
+            'apikey': 'Lvb-N18kP4Z7GgIjh2lTEopM7D6uh1VzA3zEFeB1WF0'
+        });
+
+        // Obtain the default map types from the platform object
+        var maptypes = platform.createDefaultLayers();
+
+        // Instantiate (and display) a map object:
+        var map = new H.Map(
+            document.getElementById('mapContainer'),
+            maptypes.vector.normal.map,
+            {
+                zoom: 10,
+                center: { lat: 28.6071, lng: 77.2127 }
+            });
+        // For map events like zoom in and zoom out
+        var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+
+        // For ui
+        var ui = H.ui.UI.createDefault(map, maptypes);
+
+     //For displaying the group of marker
+            //var group = new H.map.Group();
+            //map.addObject(group);
+
+            //group.addEventListener('tap', function (evt) {
+
+            //    var bubble = new H.ui.InfoBubble(evt.target.getGeometry(), {
+            //        content: evt.target.getData()
+            //    });
+
+            //    ui.addBubble(bubble);
+            //}, false);
+
+        
+            //var marker = new H.map.Marker({ lat: 52.51, lng: 13.5 });
+            //marker.setData("Hello");
+            //group.addObject(marker);
+
+            //var marker1 = new H.map.Marker({ lat: 40.4, lng: -3.6833 });
+            //marker1.setData("Hello2");
+            //group.addObject(marker1);
+
+
+    // Drawing Marker (Custom)
+        //var LocationOfMarker = { lat: 28.6071, lng: 77.2127 };
+        //var con = new H.map.Icon('/img/leaf-green.png');
+        //var marker = new H.map.Marker(LocationOfMarker,{icon : con});
+        //map.addObject(marker);
+        //map.setZoom(8);
+
+    //Drawing Circle
+        var circle = new H.map.Circle({ lat: 28.6071, lng: 77.2127 },
+            1000,
+        {
+                style: {
+                    strokeColor: 'rgba(55, 85, 170, 0.6)', 
+                    lineWidth: 2,
+                    fillColor: 'rgba(0, 128, 0, 0.7)' 
+                }
+        }
+        );
+        map.addObject(circle);
+        map.setZoom(9);
+
+        
+
+     //Drawing Rectangle
+        //var customStyle = {
+        //    strokeColor: 'black',
+        //    fillColor: 'rgba(255, 255, 255, 0.5)',
+        //    lineWidth: 10,
+        //    lineCap: 'square',
+        //    lineJoin: 'bevel'
+        //};
+  
+        //var rect = new H.map.Rect(new H.geo.Rect(120.5, 40.5, 40.5, 14.5),
+        //    { style: customStyle });
+
+        //// Add the rectangle to the map:
+        //map.addObject(rect);
+
+     //Drawing Line
+        //var points = [
+        //    { lat: 28.6071, lng: 77.2127 },
+        //    { lat: 28.6072, lng: 77.2130 },
+        //    { lat: 28.6079, lng: 77.2140 },
+        //    { lat: 28.6085, lng: 77.2150 },
+        //    { lat: 28.6100, lng: 77.2180 },
+        //    { lat: 28.6150, lng: 77.2208 }
+            
+        //];
+
+        //var linestring = new H.geo.LineString();
+        //points.forEach(function (point) {
+        //    linestring.pushPoint(point);
+        //});
+      
+        //var polyline = new H.map.Polyline(linestring, { style: { lineWidth: 10 } });
+        //map.addObject(polyline);
+        //map.setZoom(10);
+
+        map.addEventListener('tap', function (e) {
+            const pointer = e.currentPointer;
+            const coord = map.screenToGeo(pointer.viewportX, pointer.viewportY);
+
+            // Display the clicked latitude and longitude
+            const infoBubble = new H.ui.InfoBubble({
+                lat: coord.lat,
+                lng: coord.lng
+            });
+            infoBubble.setContent(`Latitude: ${coord.lat}<br>Longitude: ${coord.lng}`);
+            ui.addBubble(infoBubble);
+        });
+
+        //map.addEventListener('tap', function (evt) {
+        //    var pointer = evt.currentPointer;
+        //    var coords = map.screenToGeo(pointer.viewportX, pointer.viewportY);
+
+        //    // Create a circle dynamically at the clicked coordinates
+        //    createDynamicCircle(coords);
+        //});
+
+        //function createDynamicCircle(coords) {
+        //    var circleRadius = 10000; 
+
+        //    var circle = new H.map.Circle(
+        //        coords,
+        //        circleRadius,
+        //        {
+        //            style: {
+        //                fillColor: 'rgba(0, 0, 255, 0.3)',
+        //                strokeColor: 'rgba(0, 0, 255, 0.8)',
+        //                lineWidth: 2
+        //            }
+        //        }
+        //    );
+
+        //    map.addObject(circle);
+        //}
+
+
+    </script>
+</body>
+</html>
+

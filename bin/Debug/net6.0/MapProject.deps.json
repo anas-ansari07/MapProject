@@ -1,0 +1,322 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "MapProject/1.0.0": {
+        "dependencies": {
+          "DotSpatial.Data": "3.0.0",
+          "DotSpatial.Projections": "4.0.656",
+          "ExifLib": "1.7.0",
+          "GDAL": "3.5.0",
+          "GDAL.Native": "3.5.0",
+          "Microsoft.AspNet.Mvc": "5.2.9",
+          "System.Drawing.Common": "7.0.0"
+        },
+        "runtime": {
+          "MapProject.dll": {}
+        }
+      },
+      "DotSpatial.Data/3.0.0": {
+        "dependencies": {
+          "DotSpatial.NTSExtension": "3.0.0",
+          "DotSpatial.Projections": "4.0.656",
+          "DotSpatial.Serialization": "3.0.0",
+          "NetTopologySuite": "2.4.0",
+          "System.Memory": "4.5.4",
+          "System.Numerics.Vectors": "4.5.0"
+        },
+        "runtime": {
+          "lib/net472/DotSpatial.Data.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.0.0"
+          }
+        }
+      },
+      "DotSpatial.NTSExtension/3.0.0": {
+        "dependencies": {
+          "NetTopologySuite": "2.4.0",
+          "System.Memory": "4.5.4",
+          "System.Numerics.Vectors": "4.5.0"
+        },
+        "runtime": {
+          "lib/net472/DotSpatial.NTSExtension.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.0.0"
+          }
+        }
+      },
+      "DotSpatial.Projections/4.0.656": {
+        "runtime": {
+          "lib/net6.0/DotSpatial.Projections.dll": {
+            "assemblyVersion": "4.0.656.0",
+            "fileVersion": "4.0.656.0"
+          }
+        }
+      },
+      "DotSpatial.Serialization/3.0.0": {
+        "runtime": {
+          "lib/net472/DotSpatial.Serialization.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.0.0"
+          }
+        }
+      },
+      "ExifLib/1.7.0": {
+        "runtime": {
+          "lib/net45/ExifLib.dll": {
+            "assemblyVersion": "1.7.0.0",
+            "fileVersion": "1.7.0.0"
+          }
+        }
+      },
+      "GDAL/3.5.0": {
+        "runtime": {
+          "lib/netstandard2.0/gdal_csharp.dll": {
+            "assemblyVersion": "3.5.0.0",
+            "fileVersion": "3.5.0.0"
+          },
+          "lib/netstandard2.0/gdalconst_csharp.dll": {
+            "assemblyVersion": "3.5.0.0",
+            "fileVersion": "3.5.0.0"
+          },
+          "lib/netstandard2.0/ogr_csharp.dll": {
+            "assemblyVersion": "3.5.0.0",
+            "fileVersion": "3.5.0.0"
+          },
+          "lib/netstandard2.0/osr_csharp.dll": {
+            "assemblyVersion": "3.5.0.0",
+            "fileVersion": "3.5.0.0"
+          }
+        }
+      },
+      "GDAL.Native/3.5.0": {
+        "dependencies": {
+          "GDAL": "3.5.0"
+        }
+      },
+      "Microsoft.AspNet.Mvc/5.2.9": {
+        "dependencies": {
+          "Microsoft.AspNet.Razor": "3.2.9",
+          "Microsoft.AspNet.WebPages": "3.2.9"
+        },
+        "runtime": {
+          "lib/net45/System.Web.Mvc.dll": {
+            "assemblyVersion": "5.2.9.0",
+            "fileVersion": "5.2.61129.10"
+          }
+        }
+      },
+      "Microsoft.AspNet.Razor/3.2.9": {
+        "runtime": {
+          "lib/net45/System.Web.Razor.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.61129.10"
+          }
+        }
+      },
+      "Microsoft.AspNet.WebPages/3.2.9": {
+        "dependencies": {
+          "Microsoft.AspNet.Razor": "3.2.9",
+          "Microsoft.Web.Infrastructure": "1.0.0"
+        },
+        "runtime": {
+          "lib/net45/System.Web.Helpers.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.61129.10"
+          },
+          "lib/net45/System.Web.WebPages.Deployment.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.61129.10"
+          },
+          "lib/net45/System.Web.WebPages.Razor.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.61129.10"
+          },
+          "lib/net45/System.Web.WebPages.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.61129.10"
+          }
+        }
+      },
+      "Microsoft.Web.Infrastructure/1.0.0": {
+        "runtime": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.20105.407"
+          }
+        }
+      },
+      "Microsoft.Win32.SystemEvents/7.0.0": {
+        "runtime": {
+          "lib/net6.0/Microsoft.Win32.SystemEvents.dll": {
+            "assemblyVersion": "7.0.0.0",
+            "fileVersion": "7.0.22.51805"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net6.0/Microsoft.Win32.SystemEvents.dll": {
+            "rid": "win",
+            "assetType": "runtime",
+            "assemblyVersion": "7.0.0.0",
+            "fileVersion": "7.0.22.51805"
+          }
+        }
+      },
+      "NetTopologySuite/2.4.0": {
+        "dependencies": {
+          "System.Memory": "4.5.4"
+        },
+        "runtime": {
+          "lib/netstandard2.0/NetTopologySuite.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.0.0"
+          }
+        }
+      },
+      "System.Drawing.Common/7.0.0": {
+        "dependencies": {
+          "Microsoft.Win32.SystemEvents": "7.0.0"
+        },
+        "runtime": {
+          "lib/net6.0/System.Drawing.Common.dll": {
+            "assemblyVersion": "7.0.0.0",
+            "fileVersion": "7.0.22.51805"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net6.0/System.Drawing.Common.dll": {
+            "rid": "win",
+            "assetType": "runtime",
+            "assemblyVersion": "7.0.0.0",
+            "fileVersion": "7.0.22.51805"
+          }
+        }
+      },
+      "System.Memory/4.5.4": {},
+      "System.Numerics.Vectors/4.5.0": {}
+    }
+  },
+  "libraries": {
+    "MapProject/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "DotSpatial.Data/3.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-UaGmCs4Pm6EavDtdOVoqdGZitMTTaGpIf4x3xmpQAb6xXq/Gt8NWPtLE8siB+cmotJKzFPvDxaZil7pKCtQdWQ==",
+      "path": "dotspatial.data/3.0.0",
+      "hashPath": "dotspatial.data.3.0.0.nupkg.sha512"
+    },
+    "DotSpatial.NTSExtension/3.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-70TrI+SvEUpdxdLtr+LdDOTzsWcDmkXV4arBrd7iopMjZaofzza9k8f6/7Tfk2Z8F1K/5fYWA4Tab/2IOomhcA==",
+      "path": "dotspatial.ntsextension/3.0.0",
+      "hashPath": "dotspatial.ntsextension.3.0.0.nupkg.sha512"
+    },
+    "DotSpatial.Projections/4.0.656": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-RpPgQohZFYFMKpdBfd++auuud1aSjxou6zesRInoQlQLXSwHgGQRCbMflMUzTpjW0mNQq3HnHEP7QfqvCK67rg==",
+      "path": "dotspatial.projections/4.0.656",
+      "hashPath": "dotspatial.projections.4.0.656.nupkg.sha512"
+    },
+    "DotSpatial.Serialization/3.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-i0YRLXs9E5NJQ9fsilrhVGGUuNro1e1FHjqOtYlmR+m1OhBioAI684GI1mJIaO7gzBA+z03L3hCRtuFLhu/dFQ==",
+      "path": "dotspatial.serialization/3.0.0",
+      "hashPath": "dotspatial.serialization.3.0.0.nupkg.sha512"
+    },
+    "ExifLib/1.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-E+Ca3FPt0ylhmbRQqSB3DtV9v8a/cC5HRPs261jxbBxMGmWuoBMfsQVv+Qp/jLxngaHE3mhNhx0Ev998hVDwPA==",
+      "path": "exiflib/1.7.0",
+      "hashPath": "exiflib.1.7.0.nupkg.sha512"
+    },
+    "GDAL/3.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-BA6We6klIyA+jzJGvoOcPz0GNF/rvQyDBV6JWgMo1hseyUJrj0mme8peiapETbGDaYj7BH0meH5x4fBx81bCsA==",
+      "path": "gdal/3.5.0",
+      "hashPath": "gdal.3.5.0.nupkg.sha512"
+    },
+    "GDAL.Native/3.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-XIZcSH1MnbmkwEgTACM3HOCRoRHIj2DupnTY5A+W8bwvzbyqLxDzhg7o6dEWR8lzK5ldE4SSUaCRsI0SnVvhCA==",
+      "path": "gdal.native/3.5.0",
+      "hashPath": "gdal.native.3.5.0.nupkg.sha512"
+    },
+    "Microsoft.AspNet.Mvc/5.2.9": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-bcekKshCAh7kTWSMZPavQStSZQF/QmjEjO2gVWGITEd0/t5eRlb+ZLDE+az2qY1bZ8L6Hz0OCNeS0uzXtJcK5w==",
+      "path": "microsoft.aspnet.mvc/5.2.9",
+      "hashPath": "microsoft.aspnet.mvc.5.2.9.nupkg.sha512"
+    },
+    "Microsoft.AspNet.Razor/3.2.9": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-QOJEnEw3xp+t5lMvYR5nGCF4CfZpHqr2p8uZOBEgDZoB6r2txtSj6581YNr+/dOHjI3YRlo1QAKGQoSohbQ/KA==",
+      "path": "microsoft.aspnet.razor/3.2.9",
+      "hashPath": "microsoft.aspnet.razor.3.2.9.nupkg.sha512"
+    },
+    "Microsoft.AspNet.WebPages/3.2.9": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-yByb721lwv8YFsx1oKA5CLKXa89XVbVMkPafS4bg/bPelBEgChq/coFBQEkA4kwcabG7AR56w3vapnoZUfr2Cw==",
+      "path": "microsoft.aspnet.webpages/3.2.9",
+      "hashPath": "microsoft.aspnet.webpages.3.2.9.nupkg.sha512"
+    },
+    "Microsoft.Web.Infrastructure/1.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-FNmvLn5m2LTU/Rs2KWVo0SIIh9Ek+U0ojex7xeDaSHw/zgEP77A8vY5cVWgUtBGS8MJfDGNn8rpXJWEIQaPwTg==",
+      "path": "microsoft.web.infrastructure/1.0.0",
+      "hashPath": "microsoft.web.infrastructure.1.0.0.nupkg.sha512"
+    },
+    "Microsoft.Win32.SystemEvents/7.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-2nXPrhdAyAzir0gLl8Yy8S5Mnm/uBSQQA7jEsILOS1MTyS7DbmV1NgViMtvV1sfCD1ebITpNwb1NIinKeJgUVQ==",
+      "path": "microsoft.win32.systemevents/7.0.0",
+      "hashPath": "microsoft.win32.systemevents.7.0.0.nupkg.sha512"
+    },
+    "NetTopologySuite/2.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-dGA7ZcCRn664AcusGJdva5r+fvQ2mfUAaBX9QLC3fwtiFi05fEOLqzZ5tTg+MWF0xCy5iCaEDYAcxnB2eLJMdQ==",
+      "path": "nettopologysuite/2.4.0",
+      "hashPath": "nettopologysuite.2.4.0.nupkg.sha512"
+    },
+    "System.Drawing.Common/7.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-KIX+oBU38pxkKPxvLcLfIkOV5Ien8ReN78wro7OF5/erwcmortzeFx+iBswlh2Vz6gVne0khocQudGwaO1Ey6A==",
+      "path": "system.drawing.common/7.0.0",
+      "hashPath": "system.drawing.common.7.0.0.nupkg.sha512"
+    },
+    "System.Memory/4.5.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-1MbJTHS1lZ4bS4FmsJjnuGJOu88ZzTT2rLvrhW7Ygic+pC0NWA+3hgAen0HRdsocuQXCkUTdFn9yHJJhsijDXw==",
+      "path": "system.memory/4.5.4",
+      "hashPath": "system.memory.4.5.4.nupkg.sha512"
+    },
+    "System.Numerics.Vectors/4.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-QQTlPTl06J/iiDbJCiepZ4H//BVraReU4O4EoRw1U02H5TLUIT7xn3GnDp9AXPSlJUDyFs4uWjWafNX6WrAojQ==",
+      "path": "system.numerics.vectors/4.5.0",
+      "hashPath": "system.numerics.vectors.4.5.0.nupkg.sha512"
+    }
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\anasp\\OneDrive\\Desktop\\MapProject\\MapProject.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\anasp\\OneDrive\\Desktop\\MapProject\\MapProject.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\anasp\\OneDrive\\Desktop\\MapProject\\MapProject.csproj",
+        "projectName": "MapProject",
+        "projectPath": "C:\\Users\\anasp\\OneDrive\\Desktop\\MapProject\\MapProject.csproj",
+        "packagesPath": "C:\\Users\\anasp\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\anasp\\OneDrive\\Desktop\\MapProject\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\anasp\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "DotSpatial.Data": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
+            "DotSpatial.Projections": {
+              "target": "Package",
+              "version": "[4.0.656, )"
+            },
+            "ExifLib": {
+              "target": "Package",
+              "version": "[1.7.0, )"
+            },
+            "GDAL": {
+              "target": "Package",
+              "version": "[3.5.0, )"
+            },
+            "GDAL.Native": {
+              "target": "Package",
+              "version": "[3.5.0, )"
+            },
+            "Microsoft.AspNet.Mvc": {
+              "target": "Package",
+              "version": "[5.2.9, )"
+            },
+            "System.Drawing.Common": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
